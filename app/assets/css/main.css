@@ -1,0 +1,113 @@
+/* Ionic di layer terbawah: CSS tanpa layer selalu menang atas Tailwind v4 (yang berlayer) */
+@layer ionic, theme, base, components, utilities;
+@import "@ionic/vue/css/core.css" layer(ionic);
+@import "@ionic/vue/css/normalize.css" layer(ionic);
+@import "@ionic/vue/css/structure.css" layer(ionic);
+@import "@ionic/vue/css/typography.css" layer(ionic);
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-rounded, system-ui, sans-serif;
+  --animate-goyang: goyang 0.6s ease-in-out;
+  --animate-muncul: muncul 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-denyut: denyut 2s ease-in-out infinite;
+  --animate-masuk-kiri: masuk-kiri 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes masuk-kiri {
+    from { opacity: 0; transform: translateX(-120%) rotate(-12deg); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes goyang {
+    0%, 100% { transform: rotate(0) scale(1); }
+    25% { transform: rotate(-7deg) scale(1.05); }
+    75% { transform: rotate(7deg) scale(1.05); }
+  }
+  @keyframes muncul {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes denyut {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--asuh-accent) 45%, transparent); }
+    50% { box-shadow: 0 0 0 10px transparent; }
+  }
+}
+
+:root {
+  --asuh-accent: #0d9488;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* latar seluruh app mengikuti pola aktif (app.vue) */
+ion-content {
+  --background: var(--asuh-bg);
+}
+ion-modal ion-content {
+  --background: #f8fafc;
+}
+ion-modal {
+  --border-radius: 32px;
+}
+ion-toast {
+  --background: #0f172a;
+  --color: #fff;
+  --border-radius: 18px;
+  --button-color: #a5f3fc;
+  font-weight: 700;
+}
+
+@layer components {
+  /* kartu kaca di atas latar gradasi (halaman) */
+  .kaca {
+    @apply rounded-[28px] bg-white/15 p-4 text-white shadow-[0_12px_32px_-14px_rgb(0_0_0/0.45)] ring-1 ring-white/25 backdrop-blur-xl;
+  }
+  /* panel gelap untuk daftar, seperti daftar ramalan 7 hari */
+  .panel-gelap {
+    @apply rounded-[28px] bg-slate-950/45 p-4 text-white ring-1 ring-white/10 backdrop-blur-xl;
+  }
+  .label-kecil {
+    @apply text-[11px] font-bold uppercase tracking-wider text-white/60;
+  }
+  /* kartu putih (di dalam modal) */
+  .card {
+    @apply rounded-[28px] bg-white/80 p-4 shadow-[0_10px_30px_-12px_rgb(15_23_42/0.18)] ring-1 ring-white/70 backdrop-blur-xl;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-extrabold transition active:scale-95;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 font-extrabold transition active:scale-[.97] disabled:opacity-40;
+  }
+  .btn-utama {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 font-extrabold text-white transition active:scale-[.97] disabled:opacity-40;
+    background: var(--asuh-accent);
+    box-shadow: 0 10px 24px -10px var(--asuh-accent);
+  }
+  .judul-kartu {
+    @apply flex items-center gap-2 text-base font-black text-slate-800;
+  }
+  .input {
+    @apply w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-3 font-bold text-slate-800 outline-none transition focus:border-[var(--asuh-accent)];
+  }
+}
+
+/* transisi Vue */
+.pop-enter-active { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.pop-leave-active { transition: all 0.15s ease-in; }
+.pop-enter-from, .pop-leave-to { opacity: 0; transform: scale(0.85) translateY(8px); }
+
+.geser-enter-active, .geser-leave-active { transition: all 0.3s ease; }
+.geser-enter-from { opacity: 0; transform: translateX(48px); }
+.geser-leave-to { opacity: 0; transform: translateX(-48px); }
+
+.daftar-enter-active, .daftar-leave-active { transition: all 0.35s ease; }
+.daftar-enter-from, .daftar-leave-to { opacity: 0; transform: translateX(-24px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

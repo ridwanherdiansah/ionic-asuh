@@ -1,0 +1,9 @@
+{
+  "appId": "id.asuh.app",
+  "appName": "Asuh",
+  "webDir": "dist",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto",
+    "backgroundColor": "#1e3a8a"
+  }
+}

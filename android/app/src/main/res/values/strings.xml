@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Asuh</string>
+    <string name="title_activity_main">Asuh</string>
+    <string name="package_name">id.asuh.app</string>
+    <string name="custom_url_scheme">id.asuh.app</string>
+</resources>
